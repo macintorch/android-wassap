@@ -20,6 +20,14 @@ public class MainActivity extends AppCompatActivity {
     EditText passwordEditText;
 
 
+    public void redirectUser() {
+        if (ParseUser.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
+
+            startActivity(intent);
+        }
+    }
+
     public void signIn(View view) {
 
         usernameEditText = findViewById(R.id.usernameEditText);
@@ -30,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
                     Log.i("Info", "Logged In");
-
+                    redirectUser();
 
                 } else  {
                     Log.i("Info", "Please Sign Up");
@@ -58,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.i("Info", "Signed up");
+                    redirectUser();
 
                 } else {
                     Toast.makeText(MainActivity.this, e.getMessage().substring(e.getMessage().indexOf(" ")) ,Toast.LENGTH_LONG).show();
@@ -71,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        redirectUser();
 
 
     }
